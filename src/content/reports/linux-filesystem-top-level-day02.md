@@ -19,7 +19,7 @@ draft: false
 ls is /usr/bin/ls
 ```
 
-[usr_bin_list.txt](attachment:db2927d3-df6f-41ca-b8a8-38e2719f3c0f:usr_bin_list.txt)
+[usr_bin_list.txt](/usr_bin_list.txt)
 
 ## `/bin`配下のコマンドはC言語などでコンパイルされた実行バイナリである
 
