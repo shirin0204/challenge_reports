@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('reports');
+
+  return reports
+    .filter((report) => !report.data.draft)
+    .map((report) => ({
+      params: {
+        challengeId: report.data.challengeId,
+        reportId: report.data.reportId,
+      },
+      props: { report },
+    }));
+}
+
+const { report } = Astro.props;
+const { Content } = await render(report);
+---
+
+<BaseLayout title={report.data.title}>
+  <p>
+    <a href="/">チャレンジ一覧</a>
+    {' / '}
+    <a href={`/${report.data.challengeId}`}>{report.data.challengeId}</a>
+  </p>
+
+  <h1>{report.data.title}</h1>
+  <p class="meta">Day {report.data.day} / {report.data.publishedAt}</p>
+
+  <article class="card">
+    <Content />
+  </article>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const challenges = await getCollection('challenges');
+
+  return challenges.map((challenge) => ({
+    params: { challengeId: challenge.data.challengeId },
+    props: { challenge },
+  }));
+}
+
+const { challenge } = Astro.props;
+
+const reports = (await getCollection('reports'))
+  .filter((report) =>
+    report.data.challengeId === challenge.data.challengeId &&
+    !report.data.draft
+  )
+  .sort((a, b) => a.data.day - b.data.day);
+---
+
+<BaseLayout title={challenge.data.title}>
+  <p><a href="/">← チャレンジ一覧へ</a></p>
+
+  <h1>{challenge.data.title}</h1>
+  <p>{challenge.body}</p>
+
+  <section>
+    <h2>一覧</h2>
+    {reports.map((report) => (
+      <article class="card">
+        <h3>
+          <a href={`/${report.data.challengeId}/${report.data.reportId}`}>
+            {report.data.title}
+          </a>
+        </h3>
+        <p>{report.data.summary}</p>
+        <p class="meta">Day {report.data.day} / {report.data.publishedAt}</p>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

@@ -1,11 +1,34 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const challenges = (await getCollection('challenges'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'ja'));
+
+const reports = await getCollection('reports');
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="チャレンジ一覧">
+  <h1>チャレンジ一覧</h1>
+
+  {challenges.map((challenge) => {
+    const challengeReports = reports
+      .filter((report) => report.data.challengeId === challenge.data.challengeId && !report.data.draft)
+      .sort((a, b) => a.data.day - b.data.day);
+
+    const latest = challengeReports[challengeReports.length - 1];
+
+    return (
+      <article class="card">
+        <h2>
+          <a href={`/${challenge.data.challengeId}`}>{challenge.data.title}</a>
+        </h2>
+        <p>{challenge.data.description}</p>
+        <p class="meta">
+          全{challenge.data.totalDays}日 / 公開中 {challengeReports.length}件
+          {latest && <> / 最新: {latest.data.publishedAt}</>}
+        </p>
+      </article>
+    );
+  })}
+</BaseLayout>
