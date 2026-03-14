@@ -1,7 +1,7 @@
 ---
 challengeId: "linux-filesystem-top-level"
 reportId: "day02"
-day: 1
+day: 4
 title: "Day 2: /bin"
 summary: "binディレクトリを学習。"
 publishedAt: "2026-03-12"

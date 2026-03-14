@@ -1,7 +1,7 @@
 ---
 challengeId: "linux-filesystem-top-level"
 reportId: "day03"
-day: 1
+day: 4
 title: "Day 3: /boot"
 summary: "bootディレクトリを学習。"
 publishedAt: "2026-03-13"

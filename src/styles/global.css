@@ -91,11 +91,11 @@ h1 {
 h2 {
   font-size: 1.35rem;
   font-weight: 800;
+  width: fit-content;
   margin-top: 2.2rem;
   margin-bottom: 1rem;
   padding-bottom: 0.35rem;
   border-bottom: 3px solid var(--accent);
-  display: inline-block;
 }
 
 h3 {
