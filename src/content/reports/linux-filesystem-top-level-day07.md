@@ -1,6 +1,6 @@
 ---
 challengeId: "linux-filesystem-top-level"
-reportId: "day0"
+reportId: "day07"
 day: 7
 title: "Day 7: /lib"
 summary: "libディレクトリを学習。"
